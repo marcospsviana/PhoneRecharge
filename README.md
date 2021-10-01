@@ -154,4 +154,11 @@ pip-compile requirements-dev.in --generate-hashes
 ```
 pip install -r requirements-dev.txt
 ```
-
+**Estrutura do projeto**
+```
+/phonecharge
+    base.py
+    models.py
+    /blueprints
+        products.py
+```
