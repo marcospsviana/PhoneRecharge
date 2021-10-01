@@ -155,16 +155,3 @@ pip-compile requirements-dev.in --generate-hashes
 pip install -r requirements-dev.txt
 ```
 
-- criar o projeto django
-
-```
-django-admin startproject companymanager .
-```
-
-- criar o app company
-
-```
-cd companymanager
-django-admin startapp company
-```
-
