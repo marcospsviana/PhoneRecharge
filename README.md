@@ -137,10 +137,17 @@ echo '-r requirements.in' > requirements-dev.in
 - incluir dependencias de desenvolvimento em requirements-dev.in
 
 ```
+-r requirements.in
 pytest
-flake8
+coverage
 black
+flake8
+pytest-flask
+pytest-cov
+codecov
+
 ```
+
 
 - compilar as dependencias
 
@@ -161,4 +168,8 @@ pip install -r requirements-dev.txt
     models.py
     /blueprints
         products.py
+    /tests
+        conftest.py
+        test_app.py
 ```
+

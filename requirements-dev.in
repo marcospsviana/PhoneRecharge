@@ -1,4 +1,7 @@
 -r requirements.in
 pytest
+coverage
 flake8
 black
+pytest-cov
+codecov
