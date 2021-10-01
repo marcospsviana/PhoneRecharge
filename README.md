@@ -137,10 +137,17 @@ echo '-r requirements.in' > requirements-dev.in
 - incluir dependencias de desenvolvimento em requirements-dev.in
 
 ```
+-r requirements.in
 pytest
-flake8
+coverage
 black
+flake8
+pytest-flask
+pytest-cov
+codecov
+
 ```
+
 
 - compilar as dependencias
 
@@ -154,17 +161,15 @@ pip-compile requirements-dev.in --generate-hashes
 ```
 pip install -r requirements-dev.txt
 ```
-
-- criar o projeto django
-
+**Estrutura do projeto**
 ```
-django-admin startproject companymanager .
-```
-
-- criar o app company
-
-```
-cd companymanager
-django-admin startapp company
+/phonecharge
+    base.py
+    models.py
+    /blueprints
+        products.py
+    /tests
+        conftest.py
+        test_app.py
 ```
 
