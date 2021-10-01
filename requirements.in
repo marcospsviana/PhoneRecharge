@@ -1,4 +1,4 @@
 flask
 flask-restful
-SQLAlchemy
+flask-sqlalchemy
 python-decouple
