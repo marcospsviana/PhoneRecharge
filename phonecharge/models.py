@@ -44,19 +44,13 @@ class Product(Base):
 
     def __repr__(self):
         return f"{self.public_id}"
-    
-    def save(self):
-        db_session.add(self)
-        db_session.commit()
-
-    def delete(self):
-        db_session.delete(self)
-        db_session.commit()
 
 
 class Recharge(Base):
     id = Column(String(50), primary_key=True)
-    public_id = Column(UUID(as_uuid=True, default=uuid.uuid4), unique=True, nullable=False)
+    public_id = Column(
+        UUID(as_uuid=True, default=uuid.uuid4), unique=True, nullable=False
+    )
     value = Column(DECIMAL, nullable=False)
     created_at = Column(TIMESTAMP)
     phone_number = Column(String(13))
@@ -66,20 +60,25 @@ class Recharge(Base):
     product_id = Column(
         ForeignKey(Product, ondelete="RESTRICT"),
     )
-    
 
     def __repr__(self):
         return f"{self.public_id}"
-    
-    def save(self):
-        db_session.add(self)
-        db_session.commit()
-
-    def delete(self):
-        db_session.delete(self)
-        db_session.commit()
 
 
 class User(Base):
     id = Column(Integer, primary_key=True)
-    email = Column(String(200))
+    email = Column(String(200), nullable=False, unique=True)
+    password = Column(String(300), nullable=False)
+
+    def __repr__(self):
+        return f"{self.public_id}"
+
+
+def save(model_data):
+    db_session.add(model_data)
+    db_session.commit()
+
+
+def delete(model_data):
+    db_session.delete(model_data)
+    db_session.commit()
