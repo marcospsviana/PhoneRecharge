@@ -102,14 +102,17 @@ flask==2.0.1 \
     #   -r requirements.in
     #   flask-restful
     #   flask-sqlalchemy
+
 flask-restful==0.3.9 \
     --hash=sha256:4970c49b6488e46c520b325f54833374dc2b98e211f1b272bd4b0c516232afe2 \
     --hash=sha256:ccec650b835d48192138c85329ae03735e6ced58e9b2d9c2146d6c84c06fa53e
     # via -r requirements.in
+
 flask-sqlalchemy==2.5.1 \
     --hash=sha256:2bda44b43e7cacb15d4e05ff3cc1f8bc97936cc464623424102bfc2c35e95912 \
     --hash=sha256:f12c3d4cc5cc7fdcc148b9527ea05671718c3ea45d50c7e732cceb33f574b390
     # via -r requirements.in
+
 greenlet==1.1.2 \
     --hash=sha256:00e44c8afdbe5467e4f7b5851be223be68adb4272f44696ee71fe46b7036a711 \
     --hash=sha256:013d61294b6cd8fe3242932c1c5e36e5d1db2c8afb58606c5a67efce62c1f5fd \
@@ -373,7 +376,9 @@ sqlalchemy==1.4.25 \
     --hash=sha256:dd4ed12a775f2cde4519f4267d3601990a97d8ecde5c944ab06bfd6e8e8ea177 \
     --hash=sha256:e37621b37c73b034997b5116678862f38ee70e5a054821c7b19d0e55df270dec \
     --hash=sha256:e93978993a2ad0af43f132be3ea8805f56b2f2cd223403ec28d3e7d5c6d39ed1
+
     # via flask-sqlalchemy
+
 toml==0.10.2 \
     --hash=sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b \
     --hash=sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f
