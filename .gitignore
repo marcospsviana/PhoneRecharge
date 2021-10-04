@@ -318,7 +318,10 @@ modules.xml
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
-
+./vscode
+/vscode
+vscode
+.vscode/settings.json
 # Local History for Visual Studio Code
 .history/
 

@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from decouple import config #config environment
-
+from decouple import config  # config environment
 
 
 def create_app():
@@ -18,4 +17,3 @@ def create_app():
 
 if __name__ == "__main__":
     create_app().run(debug=config("DEBUG", default=False, cast=bool))
-
