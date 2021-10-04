@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from decouple import config #config environment
 
 
-def create_app(test_config=None):
+def create_app():
     app = Flask(__name__)
     app.config.from_envvar(
         config("SECRET_KEY"),
@@ -12,7 +12,7 @@ def create_app(test_config=None):
     )
     db = SQLAlchemy(app)
 
-    return app
+    return app, db
 
 
 if __name__ == "__main__":
