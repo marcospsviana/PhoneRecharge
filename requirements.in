@@ -1,4 +1,6 @@
 flask
 flask-restful
-SQLAlchemy
+flask-sqlalchemy
 python-decouple
+psycopg2-binary
+
