@@ -46,7 +46,3 @@ def db():
     product.delete()
     recharge.delete()
 
-    
-    
-
-
