@@ -48,9 +48,11 @@ class Product(Base):
 
 class Recharge(Base):
     id = Column(String(50), primary_key=True)
+
     public_id = Column(
         UUID(as_uuid=True, default=uuid.uuid4), unique=True, nullable=False
     )
+
     value = Column(DECIMAL, nullable=False)
     created_at = Column(TIMESTAMP)
     phone_number = Column(String(13))
@@ -63,6 +65,7 @@ class Recharge(Base):
 
     def __repr__(self):
         return f"{self.public_id}"
+
 
 
 class User(Base):
@@ -82,3 +85,4 @@ def save(model_data):
 def delete(model_data):
     db_session.delete(model_data)
     db_session.commit()
+

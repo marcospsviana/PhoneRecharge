@@ -1,6 +1,7 @@
 import pytest
 from phonecharge.base import create_app
 from phonecharge.models import Recharge, Product, Company, save, delete
+
 import uuid
 from datetime import datetime
 
@@ -28,6 +29,7 @@ def db():
         Company(id = 2, name = "tim")
     ]
     save(company)
+
     product = [
         Product(id = 1, public_id = "claro_10", company_id = 1, value = "10.0"),
         Product(id = 2, public_id = "claro_20", company_id = 1, value = "20.0"),
@@ -35,14 +37,17 @@ def db():
         Product(id = 4, public_id = "tim_20", company_id = 2, value = "20.0"),
     ]
     save(product)
+
     recharge = [
         Recharge(id = 1, public_id = uid_recharge_1, company_id = 2, product_id = "tim_10", create_at=create_at, value = "10.0", phone_number="5511999999999"),
         Recharge(id = 2, public_id = uid_recharge_2, company_id = 1, product_id = "claro_20", create_at=create_at,  value = "20.0", phone_number="5511969999999"),
     ]
+
     save(recharge)
     db_session.commit()
     yield company, product, recharge
     delete(company)
     delete(product)
     delete(recharge)
+
 
