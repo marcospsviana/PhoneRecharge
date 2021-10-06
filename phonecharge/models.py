@@ -1,88 +1,133 @@
-from sqlalchemy import Column, Integer, ForeignKey, String, DECIMAL, TIMESTAMP
-import sqlalchemy as sqla
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.dialects.postgresql import UUID
-import uuid
-
+from datetime import datetime
 from decouple import config
-
-engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
-
-conn = engine.connect()
-
-db_session = scoped_session(sessionmaker(autocommit=False, bind=engine))
-
-Base = declarative_base()
-Base.query = db_session.query_property()
+from psycopg2 import connect
 
 
-class Company(Base):
-    id = Column(String(50), primary_key=True)
-    name = Column(String(80), unique=True, nullable=False)
+def connection():
+    DB_NAME = config("DB_NAME")
+    DB_USER = config("DB_USER")
+    DB_PASSWORD = config("DB_PASSWORD")
+    DB_HOST = config("DB_HOST")
+    DB_PORT = config("DB_PORT")
 
-    def __repr__(self):
-        return f"{self.company_name}"
-
-    def save(self):
-        db_session.add(self)
-        db_session.commit()
-
-    def delete(self):
-        db_session.delete(self)
-        db_session.commit()
-
-
-class Product(Base):
-    id = Column(String(50), primary_key=True)
-    public_id = Column(String(80), unique=True, nullable=False)
-    value = Column(DECIMAL, nullable=False)
-    comany_id = Column(
-        ForeignKey("company.id"),
+    conn = connect(
+        database=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT
     )
+    cursor = conn.cursor()
+    return conn, cursor
 
-    def __repr__(self):
-        return f"{self.public_id}"
+
+def conn_close(conn, cursor):
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
-class Recharge(Base):
-    id = Column(String(50), primary_key=True)
+def create_all():
+    conn, cursor = connection()
 
-    public_id = Column(
-        UUID(as_uuid=True, default=uuid.uuid4), unique=True, nullable=False
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS companies(
+            id SERIAL,
+            public_id VARCHAR(50) NOT NULL,
+            name VARCHAR(200) NOT NULL,
+            PRIMARY KEY(id));
+         CREATE TABLE IF NOT EXISTS products(
+            id SERIAL,
+            public_id VARCHAR(200) NOT NULL,
+            company_id INT NOT NULL,
+            value DECIMAL NOT NULL,
+            PRIMARY KEY(id),
+            CONSTRAINT fk_company
+                FOREIGN KEY(company_id)
+                    REFERENCES companies(id)
+                    ON DELETE RESTRICT);
+        CREATE TABLE IF NOT EXISTS recharges(
+            id SERIAL,
+            public_id VARCHAR(200) NOT NULL,
+            product_id INT,
+            created_at TIMESTAMP,
+            phone_number VARCHAR(15),
+            value DECIMAL,
+            PRIMARY KEY(id),
+            CONSTRAINT fk_product
+                FOREIGN KEY(product_id)
+                    REFERENCES products(id)
+                    ON DELETE RESTRICT
+        );
+    CREATE TABLE IF NOT EXISTS users(
+            id SERIAL,
+            email VARCHAR(250) NOT NULL,
+            password VARCHAR(300) NOT NULL,
+            PRIMARY KEY(id)
+        );
+
+    """
     )
-
-    value = Column(DECIMAL, nullable=False)
-    created_at = Column(TIMESTAMP)
-    phone_number = Column(String(13))
-    comany_id = Column(
-        ForeignKey(Company, ondelete="RESTRICT"),
-    )
-    product_id = Column(
-        ForeignKey(Product, ondelete="RESTRICT"),
-    )
-
-    def __repr__(self):
-        return f"{self.public_id}"
+    conn_close(conn, cursor)
 
 
-
-class User(Base):
-    id = Column(Integer, primary_key=True)
-    email = Column(String(200), nullable=False, unique=True)
-    password = Column(String(300), nullable=False)
-
-    def __repr__(self):
-        return f"{self.public_id}"
+def save_company(company_id, name):
+    conn, cursor = connection()
+    sql = f"INSERT INTO companies (public_id, name) VALUES ('{company_id}', '{name}')"
+    cursor.execute(sql)
+    conn_close(conn, cursor)
 
 
-def save(model_data):
-    db_session.add(model_data)
-    db_session.commit()
+def save_products(product_id, company_id, value):
+    conn, cursor = connection()
+    sql = f"INSERT INTO products (public_id, company_id, value) VALUES ('{product_id}', '{company_id}', {value})"
+    cursor.execute(sql)
+    conn_close(conn, cursor)
 
 
-def delete(model_data):
-    db_session.delete(model_data)
-    db_session.commit()
+def save_recharge(public_id, product_id, phone_number, value):
+    created_at = datetime.isoformat(datetime.now())
+    conn, cursor = connection()
+    sql = f"""INSERT INTO recharges (public_id, product_id, created_at, phone_number, value)\
+    VALUES ('{public_id}', {product_id}, '{created_at}', '{phone_number}', {value})"""
+    cursor.execute(sql)
+    conn_close(conn, cursor)
 
+
+def delete(table, model_data):
+    conn, cursor = connection()
+    sql = f"DELETE FROM {table} WHERE public_id = '{model_data}'"
+    cursor.execute(sql)
+    conn_close(conn, cursor)
+
+
+def get_products():
+    conn, cursor = connection()
+    sql = "SELECT * FROM products;"
+    cursor.execute(sql)
+    products = cursor.fetchall()
+    conn_close(conn, cursor)
+    return products
+
+
+def get_companies():
+    conn, cursor = connection()
+    sql = "SELECT * FROM companies;"
+    cursor.execute(sql)
+    companies = cursor.fetchall()
+    conn_close(conn, cursor)
+    return companies
+
+
+def get_recharges():
+    conn, cursor = connection()
+    sql = "SELECT * FROM recharges;"
+    cursor.execute(sql)
+    recharges = cursor.fetchall()
+    conn_close(conn, cursor)
+    return recharges
+
+
+def init_db():
+    create_all()
+
+
+if __name__ == "__main__":
+    init_db()

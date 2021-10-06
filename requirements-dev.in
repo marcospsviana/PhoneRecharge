@@ -1,5 +1,6 @@
 -r requirements.in
 pytest
+pytest-flask
 coverage
 flake8
 black
