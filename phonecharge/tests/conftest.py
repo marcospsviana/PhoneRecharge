@@ -1,7 +1,51 @@
-import os
-import tempfile
 import pytest
+from phonecharge.base import create_app
+from phonecharge.models import (
+    save_company,
+    save_products,
+    save_recharge,
+    delete,
+    get_products,
+    get_companies,
+    get_recharges,
+)
+
+import uuid
 
 
-def client():
-    
+@pytest.fixture(scope="session")
+def app():
+    return create_app()
+
+
+@pytest.fixture(scope="session")
+def db():
+    uid_recharge_1 = str(uuid.uuid4().int)
+    uid_recharge_2 = str(uuid.uuid4().int)
+
+    save_company("claro_11", "claro")
+    save_company("tim_11", "tim")
+
+    save_products("claro_10", 1, "10.0")
+    save_products("claro_20", 1, "20.0")
+    save_products("tim_10", 2, "10.0")
+    save_products("tim_20", 2, "20.0")
+
+    save_recharge(uid_recharge_1, 3, 10.0, "5511999999999")
+    save_recharge(uid_recharge_2, 1, 20.0, "5511969999999")
+
+    products = get_products()
+    recharges = get_recharges()
+    companies = get_companies()
+    yield products, recharges, companies
+
+    delete("recharges", uid_recharge_1)
+    delete("recharges", uid_recharge_2)
+
+    delete("products", "claro_10")
+    delete("products", "claro_20")
+    delete("products", "tim_10")
+    delete("products", "tim_20")
+
+    delete("companies", "claro_11")
+    delete("companies", "tim_11")
