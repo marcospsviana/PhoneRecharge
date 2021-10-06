@@ -1,7 +1,8 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,intellij+all,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,intellij+all,visualstudiocode
-
+#versions pyenv config
+.python-version
 ### Django ###
 *.log
 *.pot
