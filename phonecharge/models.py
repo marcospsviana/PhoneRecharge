@@ -75,18 +75,23 @@ def save_company(company_id, name):
     conn_close(conn, cursor)
 
 
-def save_products(product_id, company_id, value):
+def save_products(company_name, public_id, value):
     conn, cursor = connection()
-    sql = f"INSERT INTO products (public_id, company_id, value) VALUES ('{product_id}', '{company_id}', {value})"
+    cursor.execute(f"SELECT id FROM companies WHERE name = '{company_name}';")
+    company_id = cursor.fetchall()
+
+    sql = f"INSERT INTO products (public_id, company_id, value) VALUES ('{public_id}', '{company_id[0][0]}', {value})"
     cursor.execute(sql)
     conn_close(conn, cursor)
 
 
-def save_recharge(public_id, product_id, phone_number, value):
+def save_recharge(public_id, product_public_id, phone_number, value):
     created_at = datetime.isoformat(datetime.now())
     conn, cursor = connection()
+    cursor.execute(f"SELECT id FROM products WHERE public_id = '{product_public_id}';")
+    product_id = cursor.fetchall()
     sql = f"""INSERT INTO recharges (public_id, product_id, created_at, phone_number, value)\
-    VALUES ('{public_id}', {product_id}, '{created_at}', '{phone_number}', {value})"""
+    VALUES ('{public_id}', {product_id[0][0]}, '{created_at}', '{phone_number}', {value})"""
     cursor.execute(sql)
     conn_close(conn, cursor)
 
