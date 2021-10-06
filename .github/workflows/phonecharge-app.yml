@@ -52,7 +52,7 @@ jobs:
           python phonecharge/models.py
       - name: Test with pytest
         run: |
-          pytest --cov=phonecharge
+          python -m pytest --cov=.
       - name: Coverage
         env:
           CODECOV_TOKEN: "56d83f79-1c52-4591-92b5-9042be887d5f"
