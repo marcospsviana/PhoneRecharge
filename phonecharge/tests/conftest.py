@@ -26,13 +26,13 @@ def db():
     save_company("claro_11", "claro")
     save_company("tim_11", "tim")
 
-    save_products("claro_10", 1, "10.0")
-    save_products("claro_20", 1, "20.0")
-    save_products("tim_10", 2, "10.0")
-    save_products("tim_20", 2, "20.0")
+    save_products("claro", "claro_10", 10.0)
+    save_products("claro", "claro_20", 20.0)
+    save_products("tim", "tim_10", 10.0)
+    save_products("tim", "tim_20", 20.0)
 
-    save_recharge(uid_recharge_1, 3, 10.0, "5511999999999")
-    save_recharge(uid_recharge_2, 1, 20.0, "5511969999999")
+    save_recharge(uid_recharge_1, "tim_10", "5511999999999", 10.0)
+    save_recharge(uid_recharge_2, "claro_20", "5511969999999", 20.0)
 
     products = get_products()
     recharges = get_recharges()
