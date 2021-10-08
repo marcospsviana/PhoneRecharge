@@ -16,7 +16,7 @@ def create_app():
         config("SQLALCHEMY_DATABASE_URI"),
     )
     api = Api(app=app)
-    api.add_resource(CompanyProducts, "/CompanyProducts")
+    api.add_resource(CompanyProducts, "/CompanyProducts", provide_automatic_options=True)
 
     migrate = Migrate(app, db)
     db.init_app(app)

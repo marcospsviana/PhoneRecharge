@@ -11,6 +11,7 @@ engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
+Base.query = session.query()
 
 
 class Company(Base):
@@ -29,7 +30,7 @@ class Company(Base):
 
     def delete(self):
         try:
-            company = session.query(Company).get(self.public_id)
+            company = session.query(Company).get(self.product_id)
             session.delete(company)
             session.commit()
         except Exception:
@@ -62,8 +63,8 @@ class Product(Base):
 
     def delete(self):
         try:
-            product = session.query(Product).get(self.public_id)
-            session.delete(product)
+            product = session.query(Product).get(self.product_id)
+            session.delete(product[0])
             session.commit()
         except Exception:
             pass
@@ -99,15 +100,20 @@ class Recharge(Base):
 
     def delete(self):
         try:
-            recharge = session.query(Recharge).get(self.public_id)
-            session.delete(recharge)
+            recharge = session.query(Recharge).get(self.product_id)
+
+            session.delete(recharge[0])
             session.commit()
         except Exception:
             pass
 
 
-def get_products():
-    pass
+def get_products(id=None):
+    if id is not None:
+        products = session.query(Company, Product.value, Product.public_id).all()
+    else:
+        products = session.query(Company, Product.public_id, Product.value).all()
+    return products
 
 
 def create_all():
