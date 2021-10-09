@@ -1,7 +1,7 @@
 from datetime import datetime
 from decouple import config
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, create_engine, Column, String, ForeignKey, select
+from sqlalchemy import Integer, create_engine, Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TIMESTAMP
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -110,7 +110,7 @@ class Recharge(Base):
 
 def get_products(id=None):
     if id is not None:
-        products = session.query(Company, Product.value, Product.public_id).all()
+        products = session.query(Company, Product.value, Product.public_id).filter(Company.public_id == id).all()
     else:
         products = session.query(Company, Product.public_id, Product.value).all()
     return products
