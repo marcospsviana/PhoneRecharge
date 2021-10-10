@@ -7,14 +7,11 @@ from flask import request
 
 class CompanyProducts(Resource):
     def get(self):
-        company_id = request.args.get('company_id')
+        if request.args.get('company_id'):
+            company_id = request.args.get('company_id')
+        else:
+            company_id = None
         products = get_products(company_id)
-        product = [
-            {
-                "id": product_single.public_id, "company": product_single.Company.public_id, "value": product_single.value
-            } for product_single in products
-        ]
-        print(f'product response {product}')
         
-        return product
+        return products
 

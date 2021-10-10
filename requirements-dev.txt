@@ -95,6 +95,14 @@ coverage==5.5 \
     #   -r requirements-dev.in
     #   codecov
     #   pytest-cov
+factory-boy==3.2.0 \
+    --hash=sha256:1d3db4b44b8c8c54cdd8b83ae4bdb9aeb121e464400035f1f03ae0e1eade56a4 \
+    --hash=sha256:401cc00ff339a022f84d64a4339503d1689e8263a4478d876e58a3295b155c5b
+    # via -r requirements-dev.in
+faker==9.2.0 \
+    --hash=sha256:526da15fd36801427b8af91af854bbe7d6b979d696d3ecef91bf4d81e9b004f2 \
+    --hash=sha256:ae9bf986d75caa9c9011eed400bb2ed6e94f2208e987ee2aa013f8a0ae495772
+    # via factory-boy
 flake8==3.9.2 \
     --hash=sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b \
     --hash=sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907
@@ -338,6 +346,10 @@ pytest-flask==1.2.0 \
     --hash=sha256:46fde652f77777bf02dc91205aec4ce20cdf2acbbbd66a918ab91f5c14693d3d \
     --hash=sha256:fe25b39ad0db09c3d1fe728edecf97ced85e774c775db259a6d25f0270a4e7c9
     # via -r requirements-dev.in
+python-dateutil==2.8.2 \
+    --hash=sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86 \
+    --hash=sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9
+    # via faker
 python-decouple==3.5 \
     --hash=sha256:68e4b3fcc97e24bc90eecc514852d0bf970f4ff031f5f7a6728ddafa9afefcaf
     # via -r requirements.in
@@ -395,7 +407,9 @@ requests==2.26.0 \
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
-    # via flask-restful
+    # via
+    #   flask-restful
+    #   python-dateutil
 sqlalchemy==1.4.25 \
     --hash=sha256:0566a6e90951590c0307c75f9176597c88ef4be2724958ca1d28e8ae05ec8822 \
     --hash=sha256:08d9396a2a38e672133266b31ed39b2b1f2b5ec712b5bff5e08033970563316a \
@@ -430,6 +444,10 @@ sqlalchemy==1.4.25 \
     # via
     #   alembic
     #   flask-sqlalchemy
+text-unidecode==1.3 \
+    --hash=sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8 \
+    --hash=sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93
+    # via faker
 toml==0.10.2 \
     --hash=sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b \
     --hash=sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f
