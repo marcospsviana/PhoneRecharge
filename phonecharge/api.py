@@ -1,5 +1,5 @@
 from flask_restful import Resource, output_json
-from phonecharge.models import Product, get_products
+from phonecharge.models import Product, Recharge, get_products
 from flask import request
 
 
@@ -13,5 +13,12 @@ class CompanyProducts(Resource):
             company_id = None
         products = get_products(company_id)
         
-        return products
+        return products    
+
+class CompanyProductsCreate(Resource):
+    def post(self):
+        product_data = request.data
+        product = Product(product_data[''])
+
+
 
