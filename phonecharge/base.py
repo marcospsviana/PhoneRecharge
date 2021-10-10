@@ -15,6 +15,7 @@ def create_app():
         config("SECRET_KEY"),
         config("SQLALCHEMY_DATABASE_URI"),
     )
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     api = Api(app=app)
     api.add_resource(CompanyProducts, "/CompanyProducts", provide_automatic_options=True)
 
