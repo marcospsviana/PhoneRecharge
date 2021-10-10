@@ -13,12 +13,12 @@ class CompanyProducts(Resource):
             company_id = None
         products = get_products(company_id)
         
-        return products
-    
+        return products    
 
 class CompanyProductsCreate(Resource):
     def post(self):
         product_data = request.data
         product = Product(product_data[''])
+
 
 
