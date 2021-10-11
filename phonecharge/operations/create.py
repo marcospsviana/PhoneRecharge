@@ -1,12 +1,12 @@
 import json
-from phonecharge.models import Product, Recharge
+from phonecharge.models import Product, Recharge, Company
 import uuid
 
 
 def save_company(company):
-    company_data = Company(company["company_id"], company["id"], company["value"])
+    company_data = Company(public_id=company["company_id"], name=company["name"])
     try:
-        session.save(product_data)
+        company_data.save()
     except Exception as err:
         return err
 
@@ -21,13 +21,13 @@ def save_product(product):
 
 def save_recharge(recharge):
     uid_recharge = str(uuid.uuid4().int)
-    print(f'recharge {json.loads(recharge)}')
+    print(f"recharge {json.loads(recharge)}")
     recharge = json.loads(recharge)
     recharge_data = Recharge(
-            public_id=uid_recharge,
-            product_id=recharge["product_id"],
-            phone_number=recharge["phone_number"],
-            value=recharge["value"]
+        public_id=uid_recharge,
+        product_id=recharge["product_id"],
+        phone_number=recharge["phone_number"],
+        value=recharge["value"],
     )
     try:
         recharge_data.save()

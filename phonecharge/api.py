@@ -27,7 +27,7 @@ class Recharge(Resource):
             recharge = select.recharge(phone_number=request.args.get('phone_number'))
             return recharge
         if request.args.get('id'):
-            recharge = select.recharge(public_id==request.args.get('id'))
+            recharge = select.recharge(public_id=request.args.get('id'))
             return recharge
         else:
             recharge = select.recharge(phone_number=None, public_id=None)
