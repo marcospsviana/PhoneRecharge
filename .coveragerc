@@ -1,2 +1,2 @@
 [run]
-omit= .venv/*, models.py
+omit= .venv/*, models.py, **/tests

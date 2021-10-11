@@ -6,4 +6,4 @@ flake8
 black
 pytest-cov
 codecov
-factory-boy
+pytest-factoryboy

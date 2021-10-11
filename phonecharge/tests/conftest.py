@@ -3,9 +3,65 @@ import uuid
 import pytest
 
 from phonecharge.base import create_app
+from decouple import config
 
 # from phonecharge.db.db_operations import save, delete
 from phonecharge.models import Company, Product, Recharge
+import factory
+
+# from factory.alchemy import SESSION_PERSISTENCE_COMMIT as session
+from sqlalchemy import orm, create_engine
+
+engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
+Session = orm.scoped_session(orm.sessionmaker(bind=engine))
+from pytest_factoryboy import register
+
+
+@register
+class CompanyFactory(factory.alchemy.SQLAlchemyModelFactory):
+    id = factory.Sequence(lambda n: n)
+    public_id = factory.Sequence(lambda n: u"%s" % n)
+    name = factory.Sequence(lambda n: u"%s" % n)
+
+    class Meta:
+        model = Company
+        sqlalchemy_session = Session()
+
+
+@register
+class ProductFactory(factory.alchemy.SQLAlchemyModelFactory):
+        # sqlalchemy_session = Session()
+        # sqlalchemy_get_or_create = ("public_id", "value")
+
+    id = factory.Sequence(lambda n: n)
+    public_id = factory.Sequence(lambda n: u"%s" % n)
+    value = factory.Sequence(lambda n: u"%d" % n)
+    company_id = factory.SubFactory(CompanyFactory)
+
+    class Meta:
+        model = Product
+        sqlalchemy_session = Session()
+
+
+@register
+class RechargeFactory(factory.alchemy.SQLAlchemyModelFactory):
+        # sqlalchemy_session = Session()
+        # sqlalchemy_get_or_create = (
+        #     "public_id",
+        #     "created_at",
+        #     "phone_number",
+        #     "value",
+        # )
+
+    id = factory.Sequence(lambda n: n)
+    public_id = factory.Sequence(lambda n: u"%s" % n)
+    phone_number = factory.Sequence(lambda n: u"%s" % n)
+    value = factory.Sequence(lambda n: u"%d" % n)
+    product_id = factory.RelatedFactoryList(ProductFactory)
+
+    class Meta:
+        model = Recharge
+        sqlalchemy_session = Session()
 
 
 @pytest.fixture(scope="session")
@@ -13,52 +69,8 @@ def app():
     return create_app()
 
 
-@pytest.fixture(scope="session")
-def db():
-    uid_recharge_1 = str(uuid.uuid4().int)
-    uid_recharge_2 = str(uuid.uuid4().int)
-
-    companies = [
-        Company(public_id="claro_11", name="claro"),
-        Company(public_id="tim_11", name="tim"),
-    ]
-    for company in companies:
-        company.save()
-
-    products = [
-        Product(public_id="claro_10", company_id="claro_11", value=10.0),
-        Product(public_id="claro_20", company_id="claro_11", value=20.0),
-        Product(public_id="tim_10", company_id="tim_11", value=10.0),
-        Product(public_id="tim_20", company_id="tim_11", value=20.0),
-    ]
-    for product in products:
-        product.save()
-
-    recharges = [
-        Recharge(
-            public_id=uid_recharge_1,
-            product_id="tim_10",
-            phone_number="5511999999999",
-            value=10.0,
-        ),
-        Recharge(
-            public_id=uid_recharge_2,
-            product_id="claro_20",
-            phone_number="5511969999999",
-            value=20.0,
-        ),
-    ]
-
-    for recharge in recharges:
-        recharge.save()
-
-    yield products, recharges, companies
-
-    for recharge in recharges:
-        recharge.delete()
-
-    for product in products:
-        product.delete()
-
-    for company in companies:
-        company.delete()
+# @pytest.fixture(scope="session")
+# def db():
+#     company = CompanyFactory()
+#     product = ProductFactory()
+#     recharge = RechargeFactory()
