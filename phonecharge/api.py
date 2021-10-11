@@ -14,8 +14,7 @@ class CompanyProducts(Resource):
             company_id = None
         products = get_products(company_id)
         
-        return products
-    
+        return products    
 
 class CompanyProductsCreate(Resource):
     def post(self):
