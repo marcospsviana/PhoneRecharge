@@ -15,6 +15,7 @@ def save_product(product):
     product_data = Product(product["company_id"], product["id"], product["value"])
     try:
         product_data.save()
+
     except Exception as err:
         return err
 
@@ -31,5 +32,6 @@ def save_recharge(recharge):
     )
     try:
         recharge_data.save()
+
     except Exception as err:
         return err
