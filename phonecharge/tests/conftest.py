@@ -4,7 +4,7 @@ from phonecharge.base import create_app
 from decouple import config
 
 # from phonecharge.db.db_operations import save, delete
-from phonecharge.models import Company, Product, Recharge
+from phonecharge.models import Company, Product, Recharge, User
 import factory
 
 from sqlalchemy import orm, create_engine
@@ -45,6 +45,17 @@ class RechargeFactory(factory.alchemy.SQLAlchemyModelFactory):
     phone_number = "5511969999999"  # factory.Sequence(lambda n: u"%s" % n)
     value = 20.0  # factory.Sequence(lambda n: u"%d" % n)
     product_id = "claro_20"  # factory.RelatedFactoryList(ProductFactory)
+
+
+@register
+class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
+    class Meta:
+        model = User
+        sqlalchemy_session = Session()
+
+    email = "marcospaulo.silvaviana@gmail.com"
+    created_at = "2021-10-12T18:23:16.220005"
+    password = "laylaebel"
 
 
 @pytest.fixture(scope="session")
