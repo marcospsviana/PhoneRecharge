@@ -9,7 +9,6 @@ def test_get_root_endpoint(client):
 def test_get_company_endpoint_not_found(client):
     assert client.get("/Company").status_code == 404
 
-
 def test_get_endpoint_get_company(client, company):
     client.get("/CompanyProducts")
     assert company.public_id == "claro_11"
@@ -42,7 +41,7 @@ def test_get_endpoint_get_recharge_by_id(client, recharge):
     assert recharge.value == 20.0
     assert recharge.product_id == "claro_20"
     assert recharge.created_at == "2021-10-11T21:23:16.220005"
-
+    
 
 def test_user_credentials(client, user):
     assert user.email == "marcospaulo.silvaviana@gmail.com"
@@ -55,3 +54,4 @@ def test_user_credentials_post_(client, user):
     assert user.email == "marcospaulo.silvaviana@gmail.com"
     assert user.password == "laylaebel"
     assert user.created_at == "2021-10-12T18:23:16.220005"
+
