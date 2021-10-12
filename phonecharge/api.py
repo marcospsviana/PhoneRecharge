@@ -35,6 +35,6 @@ class Recharge(Resource):
     def post(self):
         recharge = create.save_recharge(recharge=request.data)
         if recharge:
-            return http_status_message(201), "recarga realizada com sucesso"
+            return http_status_message(201), 201
         else:
             return http_status_message(400)
