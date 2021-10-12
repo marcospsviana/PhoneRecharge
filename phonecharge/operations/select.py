@@ -58,6 +58,27 @@ def recharge(phone_number=None, public_id=None):
             "phone_number": recharge.phone_number,
             "value": recharge.value,
         }
+    elif public_id is not None:
+        recharge = (
+            session.query(
+                Recharge.value,
+                Recharge.public_id,
+                Recharge.created_at,
+                Recharge.product_id,
+                Recharge.phone_number,
+            )
+            .filter(Recharge.public_id == public_id)
+            .first()
+        )
+
+        return {
+            "id": recharge.public_id,
+            "created_at": f"{datetime.isoformat(recharge.created_at)}",
+            "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+            "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+            "phone_number": recharge.phone_number,
+            "value": recharge.value,
+        }
     else:
         recharge_all = session.query(
             Recharge.public_id,

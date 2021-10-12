@@ -84,13 +84,18 @@ class Recharge(Base):
     def save(self):
         recharge = Recharge(
             public_id=self.public_id,
-            product_id=self.product[0],
+            product_id=session.query(Product.id).filter(
+                Product.public_id == self.product_id
+            )[0][0],
             value=self.value,
             phone_number=self.phone_number,
         )
-
-        session.add(recharge)
-        session.commit()
+        try:
+            session.add(recharge)
+            session.commit()
+            return True
+        except Exception as err:
+            return err
 
     def delete(self):
         try:
