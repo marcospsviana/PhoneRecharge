@@ -59,6 +59,11 @@ def recharge(phone_number=None, public_id=None):
             "value": recharge.value,
         }
     else:
+<<<<<<< HEAD
+=======
+        products_all = session.query(Product).all()
+        company_all = session.query(Company).all()
+>>>>>>> e49233b5e41b7288d9f2f1948c1c6826b0fe6f3e
         recharge_all = session.query(
             Recharge.public_id,
             Recharge.created_at,
@@ -80,3 +85,7 @@ def recharge(phone_number=None, public_id=None):
         ]
 
         return recharge_list
+<<<<<<< HEAD
+=======
+
+>>>>>>> e49233b5e41b7288d9f2f1948c1c6826b0fe6f3e

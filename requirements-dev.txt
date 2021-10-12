@@ -347,6 +347,10 @@ pytest-factoryboy==2.1.0 \
     --hash=sha256:10c02d2736cb52c7af28065db9617e7f50634e95eaa07eeb9a007026aa3dc0a8 \
     --hash=sha256:23bc562ab32cc39eddfbbbf70e618a1b30e834a4cfa451c4bedc36216f0a7b19
     # via -r requirements-dev.in
+pytest-factoryboy==2.1.0 \
+    --hash=sha256:10c02d2736cb52c7af28065db9617e7f50634e95eaa07eeb9a007026aa3dc0a8 \
+    --hash=sha256:23bc562ab32cc39eddfbbbf70e618a1b30e834a4cfa451c4bedc36216f0a7b19
+    # via -r requirements-dev.in
 pytest-flask==1.2.0 \
     --hash=sha256:46fde652f77777bf02dc91205aec4ce20cdf2acbbbd66a918ab91f5c14693d3d \
     --hash=sha256:fe25b39ad0db09c3d1fe728edecf97ced85e774c775db259a6d25f0270a4e7c9
