@@ -50,7 +50,7 @@ def test_user_credentials(client, user):
     assert user.created_at == "2021-10-12T18:23:16.220005"
 
 
-@pytest.l
+
 def test_user_credentials_post_(client, user):
     assert user.email == "marcospaulo.silvaviana@gmail.com"
     assert user.password == "laylaebel"
