@@ -71,6 +71,38 @@ pip-compile requirements-dev.in --generate-hashes
 pip install -r requirements-dev.txt
 ```
 
+Populate database tables Company, Product 
+~~~python
+from phonecharge.models import Company, Product
+
+def create():
+    company = Company(public_id='claro_11', name='claro')
+    company.save()
+    company = Company(public_id='tim_11', name='tim')
+    company.save()
+
+    product = Product(public_id='claro_10', value=10.0, company_id='claro_11')
+    product.save()
+
+    product = Product(public_id='claro_20', value=20.0, company_id='claro_11')
+    product.save()
+
+    product = Product(public_id='tim_20', value=20.0, company_id='tim_11')
+    product.save()
+
+    product = Product(public_id='tim_10', value=10.0, company_id='tim_11')
+    product.save()
+
+
+
+if __name__ == '__main__':
+    create()
+~~~
+**execute**
+```
+python phonecharge/operations/create_company_and_product.py
+```
+
 ## API endpoints
 
 Get all products
@@ -78,6 +110,10 @@ Get all products
 ```
 GET /CompanyProducts
 ```
+headers 
+~~~python
+headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
+~~~
 **Response**
 ~~~json
 [
@@ -118,6 +154,10 @@ Get all recharges
 GET /PhoneRecharges
 
 ```
+headers 
+~~~python
+headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
+~~~
 **Response**
 
 ~~~json
@@ -146,6 +186,10 @@ Get recharges by phone number
 ```
 GET /PhoneRecharges?phone_number=5511969999999
 ```
+headers 
+~~~python
+headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
+~~~
 **Response**
 
 ~~~json
@@ -163,8 +207,11 @@ Get recharges by id recharge
 ```
 GET /PhoneRecharges?id=112631079329131080778876532853319043477
 ```
+headers 
+~~~python
+headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
+~~~
 **Response**
-
 ~~~json
 {
     "id": "112631079329131080778876532853319043477",
@@ -185,6 +232,10 @@ POST /PhoneRecharges
 ```
 
 **Parameters**
+headers 
+~~~python
+headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
+~~~
 
 ~~~json
 {

@@ -1,5 +1,5 @@
 import json
-from phonecharge.models import Product, Recharge, Company
+from phonecharge.models import Product, Recharge, Company, User
 import uuid
 
 
@@ -15,6 +15,11 @@ def save_product(product):
     product_data = Product(product["company_id"], product["id"], product["value"])
     resp = product_data.save()
     return resp
+
+
+def save_user(email, password):
+    user = User(email, password)
+    user.save()
 
 
 def save_recharge(recharge):
