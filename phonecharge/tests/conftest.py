@@ -1,7 +1,5 @@
-import uuid
-
 import pytest
-
+from pytest_factoryboy import register
 from phonecharge.base import create_app
 from decouple import config
 
@@ -9,59 +7,44 @@ from decouple import config
 from phonecharge.models import Company, Product, Recharge
 import factory
 
-# from factory.alchemy import SESSION_PERSISTENCE_COMMIT as session
 from sqlalchemy import orm, create_engine
 
 engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
 Session = orm.scoped_session(orm.sessionmaker(bind=engine))
-from pytest_factoryboy import register
 
 
 @register
 class CompanyFactory(factory.alchemy.SQLAlchemyModelFactory):
-    id = factory.Sequence(lambda n: n)
-    public_id = factory.Sequence(lambda n: u"%s" % n)
-    name = factory.Sequence(lambda n: u"%s" % n)
-
     class Meta:
         model = Company
         sqlalchemy_session = Session()
 
+    public_id = "claro_11"
+    name = "claro"
+
 
 @register
 class ProductFactory(factory.alchemy.SQLAlchemyModelFactory):
-        # sqlalchemy_session = Session()
-        # sqlalchemy_get_or_create = ("public_id", "value")
-
-    id = factory.Sequence(lambda n: n)
-    public_id = factory.Sequence(lambda n: u"%s" % n)
-    value = factory.Sequence(lambda n: u"%d" % n)
-    company_id = factory.SubFactory(CompanyFactory)
-
     class Meta:
         model = Product
         sqlalchemy_session = Session()
 
+    public_id = "claro_10"  # factory.Sequence(lambda n: u"%s" % n)
+    value = 10.0  # factory.Sequence(lambda n: u"%d" % n)
+    company_id = 1  # factory.SubFactory(CompanyFactory)
+
 
 @register
 class RechargeFactory(factory.alchemy.SQLAlchemyModelFactory):
-        # sqlalchemy_session = Session()
-        # sqlalchemy_get_or_create = (
-        #     "public_id",
-        #     "created_at",
-        #     "phone_number",
-        #     "value",
-        # )
-
-    id = factory.Sequence(lambda n: n)
-    public_id = factory.Sequence(lambda n: u"%s" % n)
-    phone_number = factory.Sequence(lambda n: u"%s" % n)
-    value = factory.Sequence(lambda n: u"%d" % n)
-    product_id = factory.RelatedFactoryList(ProductFactory)
-
     class Meta:
         model = Recharge
         sqlalchemy_session = Session()
+
+    public_id = "284206977373282501394198671064916751422"  # factory.Sequence(lambda n: u"%s" % n)
+    created_at = "2021-10-11T21:23:16.220005"
+    phone_number = "5511969999999"  # factory.Sequence(lambda n: u"%s" % n)
+    value = 20.0  # factory.Sequence(lambda n: u"%d" % n)
+    product_id = "claro_20"  # factory.RelatedFactoryList(ProductFactory)
 
 
 @pytest.fixture(scope="session")

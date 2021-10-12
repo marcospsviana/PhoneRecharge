@@ -1,11 +1,10 @@
 from datetime import datetime
 from decouple import config
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, create_engine, Column, String, ForeignKey, select
+from sqlalchemy import Integer, create_engine, Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TIMESTAMP
 from sqlalchemy.orm import sessionmaker, relationship
 
-import json
 engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
 
 Session = sessionmaker(bind=engine)
@@ -83,18 +82,13 @@ class Recharge(Base):
         return f"{self.public_id}"
 
     def save(self):
-        product = (
-            session.query(Product.id)
-            .where(Product.public_id == self.product_id)
-            .first()
-        )
-        print(f"product {product}")
         recharge = Recharge(
             public_id=self.public_id,
-            product_id=product[0],
+            product_id=self.product[0],
             value=self.value,
             phone_number=self.phone_number,
         )
+
         session.add(recharge)
         session.commit()
 
@@ -110,25 +104,36 @@ class Recharge(Base):
 
 def get_products(id=None):
     if id is not None:
-        products = session.query(Company, Product.public_id, Product.value).join(Company).filter(Company.public_id == id).all()
+        products = (
+            session.query(Company, Product.public_id, Product.value)
+            .join(Company)
+            .filter(Company.public_id == id)
+            .all()
+        )
         return {
-        'company_id': f'{id}',
-        'products': [{"id": product.public_id, "value": product.value} for product in products]
-    }
+            "company_id": f"{id}",
+            "products": [
+                {"id": product.public_id, "value": product.value}
+                for product in products
+            ],
+        }
     else:
         products_all = session.query(Product).all()
         company_all = session.query(Company).all()
-        
-        list_all = [{
-            'company_id': f'{company.public_id}',
-            'products': [
-                {"id": product.public_id, "value": product.value} for product in products_all if product.company_id == company.id
-                
-            ]
-        } for company in company_all ]
-       
+
+        list_all = [
+            {
+                "company_id": f"{company.public_id}",
+                "products": [
+                    {"id": product.public_id, "value": product.value}
+                    for product in products_all
+                    if product.company_id == company.id
+                ],
+            }
+            for company in company_all
+        ]
+
         return list_all
-    
 
 
 def create_all():

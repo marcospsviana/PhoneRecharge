@@ -13,11 +13,8 @@ def save_company(company):
 
 def save_product(product):
     product_data = Product(product["company_id"], product["id"], product["value"])
-    try:
-        product_data.save()
-
-    except Exception as err:
-        return err
+    resp = product_data.save()
+    return resp
 
 
 def save_recharge(recharge):
@@ -30,8 +27,7 @@ def save_recharge(recharge):
         phone_number=recharge["phone_number"],
         value=recharge["value"],
     )
-    try:
-        recharge_data.save()
 
-    except Exception as err:
-        return err
+    resp = recharge_data.save()
+
+    return resp

@@ -4,3 +4,4 @@ flask-sqlalchemy
 python-decouple
 psycopg2-binary
 flask-migrate
+safrs
