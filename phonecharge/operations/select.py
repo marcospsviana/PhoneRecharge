@@ -80,8 +80,6 @@ def recharge(phone_number=None, public_id=None):
             "value": recharge.value,
         }
     else:
-        products_all = session.query(Product).all()
-        company_all = session.query(Company).all()
         recharge_all = session.query(
             Recharge.public_id,
             Recharge.created_at,
