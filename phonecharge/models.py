@@ -107,6 +107,26 @@ class Recharge(Base):
             pass
 
 
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    public_id = Column(String(80), nullable=False)
+    email = Column(String(300), nullable=False, index=True)
+    created_at = Column(TIMESTAMP, default=datetime.isoformat(datetime.now()))
+    password = Column(String(500), nullable=False)
+
+    def __repr__(self):
+        return self.email
+
+    def save(self):
+        session.add(self)
+        session.commit()
+
+    def delete(self):
+        session.delete(self)
+        session.commit()
+
+
 def get_products(id=None):
     if id is not None:
         products = (
