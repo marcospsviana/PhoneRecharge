@@ -70,15 +70,126 @@ pip-compile requirements-dev.in --generate-hashes
 ```
 pip install -r requirements-dev.txt
 ```
-**Estrutura do projeto**
+
+## API endpoints
+
+Get all products
+
 ```
-/phonecharge
-    base.py
-    models.py
-    /blueprints
-        products.py
-    /tests
-        conftest.py
-        test_app.py
+GET /CompanyProducts
+```
+**Response**
+~~~json
+[
+    {
+        "company_id": "claro_11",
+        "products": [
+            {
+                "id": "claro_10",
+                "value": 10.0
+            },
+            {
+                "id": "claro_20",
+                "value": 20.0
+            }
+        ]
+    },
+    {
+        "company_id": "tim_11",
+        "products": [
+            {
+                "id": "tim_10",
+                "value": 10.0
+            },
+            {
+                "id": "tim_20",
+                "value": 20.0
+            }
+        ]
+    }
+]
+~~~
+
+
+
+Get all recharges
+
+```
+GET /PhoneRecharges
+
+```
+**Response**
+
+~~~json
+[
+    {
+        "id": "107802416839818990217276955951447063658",
+        "created_at": "2021-10-08T08:25:16.518757",
+        "company_id": "claro_11",
+        "product_id": "tim_10",
+        "phone_number": "5511999999999",
+        "value": 10.0
+    },
+    {
+        "id": "112631079329131080778876532853319043477",
+        "created_at": "2021-10-11T08:03:27.277829",
+        "company_id": "claro_11",
+        "product_id": "claro_20",
+        "phone_number": "5511999556699",
+        "value": 20.0
+    }
+]
+
+~~~
+
+Get recharges by phone number
+```
+GET /PhoneRecharges?phone_number=5511969999999
+```
+**Response**
+
+~~~json
+{
+    "id": "284206977373282501394198671064916751422",
+    "created_at": "2021-10-08T08:25:16.518757",
+    "company_id": "claro_11",
+    "product_id": "claro_20",
+    "phone_number": "5511969999999",
+    "value": 20.0
+}
+~~~
+
+Get recharges by id recharge
+```
+GET /PhoneRecharges?id=112631079329131080778876532853319043477
+```
+**Response**
+
+~~~json
+{
+    "id": "112631079329131080778876532853319043477",
+    "created_at": "2021-10-11T08:03:27.277829",
+    "company_id": "claro_11",
+    "product_id": "claro_20",
+    "phone_number": "5511999556699",
+    "value": 20.0
+}
+~~~
+
+
+
+Create a new recharge
+
+```
+POST /PhoneRecharges
 ```
 
+**Parameters**
+
+~~~json
+{
+"product_id": "claro_20",
+"phone_number": "5511999556691",
+"value": 20.0
+}
+~~~

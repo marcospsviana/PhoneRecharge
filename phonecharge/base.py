@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from decouple import config  # config environment
 from flask_migrate import Migrate
 from flask_restful import Api
+from phonecharge.api import CompanyProducts, Recharge
 
-from phonecharge.api import CompanyProducts
 
 db = SQLAlchemy()
 
@@ -15,8 +15,12 @@ def create_app():
         config("SECRET_KEY"),
         config("SQLALCHEMY_DATABASE_URI"),
     )
-    api = Api(app=app)
-    api.add_resource(CompanyProducts, "/CompanyProducts")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    api = Api(app)
+    api.add_resource(
+        CompanyProducts, "/CompanyProducts", provide_automatic_options=True
+    )
+    api.add_resource(Recharge, "/PhoneRecharges")
 
     migrate = Migrate(app, db)
     db.init_app(app)
