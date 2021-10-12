@@ -1,10 +1,36 @@
 from flask_restful import Resource, http_status_message
 from phonecharge.models import get_products
 from flask import request
+from flask_httpauth import HTTPBasicAuth
+from passlib.context import CryptContext
 from phonecharge.operations import select, create
+from phonecharge.models import User, session
+
+
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify(email, password):
+    if email and password:
+        crypt_context = CryptContext(schemes=["sha256_crypt"])
+        result = session.query(User).filter(User.email == email)
+
+        user = {}
+        for row in result:
+            user["email"] = row.email
+            print(f"row password {row.password}")
+            user["password"] = row.password
+        if crypt_context.verify(password, user["password"]):
+            return user
+        else:
+            return False
+    else:
+        http_status_message(401), 401
 
 
 class CompanyProducts(Resource):
+    @auth.login_required
     def get(self):
         if request.args.get("company_id"):
             company_id = request.args.get("company_id")
@@ -15,12 +41,8 @@ class CompanyProducts(Resource):
         return products
 
 
-# class CompanyProductsCreate(Resource):
-#     def post(self):
-#         create.save_product(product=request.data)
-
-
 class Recharge(Resource):
+    @auth.login_required
     def get(self):
         if request.args.get("phone_number"):
             recharge = select.recharge(phone_number=request.args.get("phone_number"))

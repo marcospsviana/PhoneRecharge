@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, create_engine, Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TIMESTAMP
 from sqlalchemy.orm import sessionmaker, relationship
+from passlib.context import CryptContext
 
 engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
 
@@ -110,7 +111,6 @@ class Recharge(Base):
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    public_id = Column(String(80), nullable=False)
     email = Column(String(300), nullable=False, index=True)
     created_at = Column(TIMESTAMP, default=datetime.isoformat(datetime.now()))
     password = Column(String(500), nullable=False)
@@ -119,7 +119,10 @@ class User(Base):
         return self.email
 
     def save(self):
-        session.add(self)
+        crypt_context = CryptContext(schemes=["sha256_crypt"])
+        password = crypt_context.hash(self.password)
+        user = User(email=self.email, password=password)
+        session.add(user)
         session.commit()
 
     def delete(self):
