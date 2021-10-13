@@ -3,16 +3,6 @@
 [![codecov](https://codecov.io/gh/marcospsviana/PhoneRecharge/branch/main/graph/badge.svg?token=ptQEaccEnM)](https://codecov.io/gh/marcospsviana/PhoneRecharge)
 [![Phone Recharge API](https://github.com/marcospsviana/PhoneRecharge/actions/workflows/phonecharge-app.yml/badge.svg)](https://github.com/marcospsviana/PhoneRecharge/actions/workflows/phonecharge-app.yml)
 
-**Objetivo**
-Problema: Recarga de telefônica Implementar uma API para permitir a compra de créditos telefônicos onde o usuário, após
-informar o número à ser recarregado a compra será efetuada. Pesquisa por produtos O primeiro recurso que deve ser
-implementado é o que irá permitir a manutenção (CRUD)
-e busca por produtos compatíveis para serem utilizados na recarga. O mesmo deverá, em seu método GET, também receber um
-parâmetro "company_id" e retornar um json com os produtos daquela companhia informada. Como no exemplo abaixo:
-Exemplo 1.1: GET /CompanyProducts?company_id=claro_11
-
-
-
 
 ### **criação da estrutura inicial do projeto**
 
