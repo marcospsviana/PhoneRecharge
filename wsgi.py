@@ -1,4 +1,5 @@
 from phonecharge.base import create_app
+from decouple import config
 
 
 if __name__ == "__main__":
