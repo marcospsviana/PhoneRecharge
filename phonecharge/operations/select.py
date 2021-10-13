@@ -13,7 +13,7 @@ def product(id=None):
         return {
             "company_id": f"{id}",
             "products": [
-                {"id": product.public_id, "value": product.value}
+                {"id": product.public_id, "value": float(product.value)}
                 for product in products
             ],
         }
@@ -25,7 +25,7 @@ def product(id=None):
             {
                 "company_id": f"{company.public_id}",
                 "products": [
-                    {"id": product.public_id, "value": product.value}
+                    {"id": product.public_id, "value": float(product.value)}
                     for product in products_all
                     if product.company_id == company.id
                 ],
@@ -58,7 +58,7 @@ def recharge(phone_number=None, public_id=None):
                 "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "phone_number": recharge.phone_number,
-                "value": recharge.value,
+                "value": float(recharge.value),
             }
         else:
             return 404
@@ -83,7 +83,7 @@ def recharge(phone_number=None, public_id=None):
                 "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "phone_number": recharge.phone_number,
-                "value": recharge.value,
+                "value": float(recharge.value),
             }
         else:
             return 404
@@ -103,7 +103,7 @@ def recharge(phone_number=None, public_id=None):
                 "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
                 "phone_number": recharge.phone_number,
-                "value": recharge.value,
+                "value": float(recharge.value),
             }
             for recharge in recharge_all
         ]

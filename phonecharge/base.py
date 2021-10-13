@@ -13,7 +13,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_envvar(
         config("SECRET_KEY"),
-        config("SQLALCHEMY_DATABASE_URI"),
+        config("DATABASE_URL"),
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     api = Api(app)
