@@ -18,6 +18,7 @@ class CompanyFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = Company
         sqlalchemy_session = Session()
+       
 
     public_id = "claro_11"
     name = "claro"
