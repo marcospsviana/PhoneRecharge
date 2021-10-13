@@ -6,15 +6,12 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP, DECIMAL
 from sqlalchemy.orm import sessionmaker, relationship
 from passlib.context import CryptContext
 
-engine = create_engine(config("DATABASE_URL"))
+engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
 
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 Base.query = session.query()
-
-
-
 
 
 class Company(Base):
