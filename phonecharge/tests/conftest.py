@@ -3,7 +3,7 @@ from pytest_factoryboy import register
 from phonecharge.base import create_app
 from decouple import config
 
-# from phonecharge.db.db_operations import save, delete
+
 from phonecharge.models import Company, Product, Recharge, User
 import factory
 
@@ -18,6 +18,7 @@ class CompanyFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = Company
         sqlalchemy_session = Session()
+       
 
     public_id = "claro_11"
     name = "claro"
@@ -28,6 +29,7 @@ class ProductFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = Product
         sqlalchemy_session = Session()
+        # sqlalchemy_session_persistence = "commit"
 
     public_id = "claro_10"  # factory.Sequence(lambda n: u"%s" % n)
     value = 10.0  # factory.Sequence(lambda n: u"%d" % n)
@@ -39,6 +41,7 @@ class RechargeFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = Recharge
         sqlalchemy_session = Session()
+        # sqlalchemy_session_persistence = "commit"
 
     public_id = "284206977373282501394198671064916751422"  # factory.Sequence(lambda n: u"%s" % n)
     created_at = "2021-10-11T21:23:16.220005"
@@ -52,6 +55,7 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = User
         sqlalchemy_session = Session()
+        # sqlalchemy_session_persistence = "commit"
 
     email = "marcospaulo.silvaviana@gmail.com"
     created_at = "2021-10-12T18:23:16.220005"
