@@ -21,10 +21,10 @@ def verify(email, password):
             user["email"] = row.email
             print(f"row password {row.password}")
             user["password"] = row.password
-        if crypt_context.verify(password, user["password"]):
-            return user
-        else:
-            return False
+            if crypt_context.verify(password, row.password):
+                return user
+            else:
+                return False
     else:
         http_status_message(401), 401
 
@@ -46,14 +46,21 @@ class Recharge(Resource):
     def get(self):
         if request.args.get("phone_number"):
             recharge = select.recharge(phone_number=request.args.get("phone_number"))
-            return recharge
+            if recharge == 404:
+                return http_status_message(404), 404
+            else:
+                return recharge
         if request.args.get("id"):
             recharge = select.recharge(public_id=request.args.get("id"))
-            return recharge
+            if recharge == 404:
+                return http_status_message(404), 404
+            else:
+                return recharge
         else:
             recharge = select.recharge(phone_number=None, public_id=None)
             return recharge
 
+    @auth.login_required
     def post(self):
         recharge = create.save_recharge(recharge=request.data)
         if recharge:

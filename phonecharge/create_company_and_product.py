@@ -1,4 +1,5 @@
-from phonecharge.models import Company, Product
+from models import Company, Product, User
+
 
 
 def create():
@@ -18,6 +19,9 @@ def create():
 
     product = Product(public_id="tim_10", value=10.0, company_id="tim_11")
     product.save()
+
+    user = User(email='marcospaulo.silvaviana@gmail.com', password='laylaebel')
+    user.save()
 
 
 if __name__ == "__main__":
