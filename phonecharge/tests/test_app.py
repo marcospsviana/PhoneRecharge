@@ -2,6 +2,7 @@ import json
 import pytest
 from phonecharge.models import Recharge, session
 
+
 def test_get_debug_false(app):
     assert app.config["DEBUG"] is not True
 
@@ -110,13 +111,12 @@ def test_get_endpoint_get_recharge_by_phone_number(client, recharge):
     )
 
 
-
 def test_get_endpoint_get_recharge_by_id_recharge(client, recharge):
     id = session.query(Recharge.public_id).first()
     headers = {
         "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
     }
-    print(f'id get recharge {id[0]}')
+    print(f"id get recharge {id[0]}")
     assert (
         client.get(
             f"/PhoneRecharges?id={id[0]}",
