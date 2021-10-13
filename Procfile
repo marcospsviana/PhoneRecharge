@@ -1,1 +1,1 @@
-web: gunicorn phonecharge.base:app
+web: gunicorn wsgi:app
