@@ -61,10 +61,3 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
 @pytest.fixture(scope="session")
 def app():
     return create_app()
-
-
-# @pytest.fixture(scope="session")
-# def db():
-#     company = CompanyFactory()
-#     product = ProductFactory()
-#     recharge = RechargeFactory()

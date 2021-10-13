@@ -49,15 +49,19 @@ def recharge(phone_number=None, public_id=None):
             .filter(Recharge.phone_number == phone_number)
             .first()
         )
+        print(f"recharge in select phone number {recharge}")
+        if recharge is not None:
 
-        return {
-            "id": recharge.public_id,
-            "created_at": f"{datetime.isoformat(recharge.created_at)}",
-            "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
-            "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
-            "phone_number": recharge.phone_number,
-            "value": recharge.value,
-        }
+            return {
+                "id": recharge.public_id,
+                "created_at": f"{datetime.isoformat(recharge.created_at)}",
+                "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+                "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+                "phone_number": recharge.phone_number,
+                "value": recharge.value,
+            }
+        else:
+            return 404
     elif public_id is not None:
         recharge = (
             session.query(
@@ -70,15 +74,19 @@ def recharge(phone_number=None, public_id=None):
             .filter(Recharge.public_id == public_id)
             .first()
         )
+        print(f"recharge in select {recharge}")
+        if recharge:
 
-        return {
-            "id": recharge.public_id,
-            "created_at": f"{datetime.isoformat(recharge.created_at)}",
-            "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
-            "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
-            "phone_number": recharge.phone_number,
-            "value": recharge.value,
-        }
+            return {
+                "id": recharge.public_id,
+                "created_at": f"{datetime.isoformat(recharge.created_at)}",
+                "company_id": f"{session.query(Company.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+                "product_id": f"{session.query(Product.public_id).filter(Product.id == recharge.product_id).first()[0]}",
+                "phone_number": recharge.phone_number,
+                "value": recharge.value,
+            }
+        else:
+            return 404
     else:
         recharge_all = session.query(
             Recharge.public_id,
