@@ -1,4 +1,10 @@
 [run]
-omit= .venv/*, models.py, **/tests, base.py, create_company_and_product.py, create.py, select.py
+omit= 
+   .venv/* 
+   */phonecharge/models.py 
+   **/tests, **/base.py 
+   */phonecharge/create_company_and_product.py
+   */phonecharge/create.py
+   */phonecharge/select.py
 
 
