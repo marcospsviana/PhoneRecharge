@@ -1,2 +1,3 @@
 [run]
 omit= .venv/*, models.py, **/tests, base.py, create_company_and_product.py
+
