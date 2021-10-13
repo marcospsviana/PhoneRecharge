@@ -1,7 +1,6 @@
 from models import Company, Product, User
 
 
-
 def create():
     company = Company(public_id="claro_11", name="claro")
     company.save()
@@ -20,7 +19,7 @@ def create():
     product = Product(public_id="tim_10", value=10.0, company_id="tim_11")
     product.save()
 
-    user = User(email='marcospaulo.silvaviana@gmail.com', password='laylaebel')
+    user = User(email="marcospaulo.silvaviana@gmail.com", password="laylaebel")
     user.save()
 
 

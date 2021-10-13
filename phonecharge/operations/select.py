@@ -49,7 +49,7 @@ def recharge(phone_number=None, public_id=None):
             .filter(Recharge.phone_number == phone_number)
             .first()
         )
-        print(f'recharge in select phone number {recharge}')
+        print(f"recharge in select phone number {recharge}")
         if recharge is not None:
 
             return {
@@ -74,7 +74,7 @@ def recharge(phone_number=None, public_id=None):
             .filter(Recharge.public_id == public_id)
             .first()
         )
-        print(f'recharge in select {recharge}')
+        print(f"recharge in select {recharge}")
         if recharge:
 
             return {

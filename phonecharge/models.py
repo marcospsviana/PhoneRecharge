@@ -60,7 +60,7 @@ class Product(Base):
         )
         session.add(product)
         session.commit()
-        return f'deleted {self.public_id}'
+        return f"deleted {self.public_id}"
 
     def delete(self):
         try:

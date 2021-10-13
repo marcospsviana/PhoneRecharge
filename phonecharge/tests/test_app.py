@@ -45,7 +45,6 @@ def test_get_endpoint_recharge_post(client, recharge):
 
 
 def test_get_endpoint_recharge_post_201(client, recharge):
-    recharge_factory = recharge
 
     payload = json.dumps(
         {
@@ -63,13 +62,11 @@ def test_get_endpoint_recharge_post_201(client, recharge):
     )
 
 
-
 def test_get_recharge(client, recharge):
     assert recharge.phone_number == "5511969999999"
     assert recharge.value == 20.0
     assert recharge.product_id == "claro_20"
-    assert recharge.created_at == "2021-10-11T21:23:16.220005"    
-
+    assert recharge.created_at == "2021-10-11T21:23:16.220005"
 
 
 def test_get_endpoint_get_recharge_by_id(client, recharge):
@@ -77,8 +74,11 @@ def test_get_endpoint_get_recharge_by_id(client, recharge):
         "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
     }
     public_id = session.query(Recharge.public_id).first()
-    print(f'public id in get endpoint {public_id}')
-    assert client.get(f"/PhoneRecharges?id={public_id[0]}", headers=headers).status_code == 200
+    print(f"public id in get endpoint {public_id}")
+    assert (
+        client.get(f"/PhoneRecharges?id={public_id[0]}", headers=headers).status_code
+        == 200
+    )
 
 
 @pytest.mark.parametrize("recharge__phone_number", ["5511969999999"])

@@ -47,7 +47,6 @@ class RechargeFactory(factory.alchemy.SQLAlchemyModelFactory):
     product_id = "claro_20"  # factory.RelatedFactoryList(ProductFactory)
 
 
-
 @register
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
@@ -62,14 +61,3 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
 @pytest.fixture(scope="session")
 def app():
     return create_app()
-
-
-@pytest.fixture(scope="session")
-def sessao():
-    company = CompanyFactory()
-    product = ProductFactory()
-    recharge = RechargeFactory()
-    
-    yield company, user, recharge
-    
-
