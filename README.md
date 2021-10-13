@@ -6,26 +6,26 @@
 
 ### **criação da estrutura inicial do projeto**
 
-- criar o ambiente virtual
+- Create virtual environment
 
 ```
 python3 -m venv .venv
 
 ```
 
-- ativar o ambiente
+- Active virtual environment
 
 ```
 source .venv/bin/activate
 ```
 
-- instalar gerenciador de dependencias
+- Install dependences manager
 
 ```
 pip install pip-tools
 ```
 
-- criar o arquivos para compilação das dependencias
+- Create arquive of the development dependences 
 
 ```
 touch requirements.in requirements-dev.in
@@ -33,7 +33,7 @@ echo 'flask' > requirements.in
 echo '-r requirements.in' > requirements-dev.in
 ```
 
-- incluir dependencias de desenvolvimento em requirements-dev.in
+- Include development dependences in requirements-dev.in
 
 ```
 -r requirements.in
@@ -48,20 +48,21 @@ codecov
 ```
 
 
-- compilar as dependencias
+- Compile dependences, needed if not has the arquives requirements.txt and requirements-dev.txt
 
 ```
 pip-compile requirements.in --generate-hashes
 pip-compile requirements-dev.in --generate-hashes
 ```
 
-- instalar dependencias
+- Install dependences
 
 ```
 pip install -r requirements-dev.txt
 ```
 
-Populate database tables Company, Product 
+Module for populate database tables Company, Product 
+### module python for create registers Company and Product
 ~~~python
 from phonecharge.models import Company, Product
 
@@ -88,10 +89,40 @@ def create():
 if __name__ == '__main__':
     create()
 ~~~
+
+**How to test**
+Needed run docker-compose
+```
+docker-compose up
+```
+Find docker container
+```
+docker ps -a
+```
+Exemple
+```
+43cfc0fcb841   postgres         "docker-entrypoint.s…"   2 days ago     Up 52 minutes             0.0.0.0:5434->5432/tcp, :::5434->5432/tcp   rechargeDB
+```
+Enter container and create database
+```
+docker exec -it 43cfc0fcb841 bash 
+
+root@43cfc0fcb841:/# psql postgres -U postgres
+
+postgres=# CREATE DATABASE rechargedb;
+```
+create tables
+**execute**
+```
+python phonecharge/models.py 
+```
+Insert initials datas in to db for Company and Products, needed for test recharges
+
 **execute**
 ```
 python phonecharge/operations/create_company_and_product.py
 ```
+
 
 ## API endpoints
 
@@ -100,7 +131,7 @@ Get all products
 ```
 GET /CompanyProducts
 ```
-headers 
+Headers 
 ~~~python
 headers ={ 'Authorization': 'Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs' }
 ~~~
