@@ -168,6 +168,10 @@ greenlet==1.1.2 \
     --hash=sha256:fa877ca7f6b48054f847b61d6fa7bed5cebb663ebc55e018fda12db09dcc664c \
     --hash=sha256:fdcec0b8399108577ec290f55551d926d9a1fa6cad45882093a7a07ac5ec147b
     # via sqlalchemy
+gunicorn==20.1.0 \
+    --hash=sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e \
+    --hash=sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8
+    # via -r requirements.in
 idna==3.2 \
     --hash=sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a \
     --hash=sha256:467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3
@@ -477,3 +481,7 @@ werkzeug==2.0.2 \
     # via
     #   flask
     #   pytest-flask
+
+# WARNING: The following packages were not pinned, but pip requires them to be
+# pinned when the requirements file includes hashes. Consider using the --allow-unsafe flag.
+# setuptools
