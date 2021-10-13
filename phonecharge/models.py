@@ -2,7 +2,7 @@ from datetime import datetime
 from decouple import config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, create_engine, Column, String, ForeignKey
-from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TIMESTAMP
+from sqlalchemy.sql.sqltypes import TIMESTAMP, DECIMAL
 from sqlalchemy.orm import sessionmaker, relationship
 from passlib.context import CryptContext
 
@@ -12,6 +12,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 Base.query = session.query()
+
+
+
 
 
 class Company(Base):
@@ -41,7 +44,7 @@ class Product(Base):
     __tablename__ = "products"
     id = Column(Integer, primary_key=True)
     public_id = Column(String(80), nullable=False, index=True)
-    value = Column(DOUBLE_PRECISION)
+    value = Column(DECIMAL)
     company_id = Column(Integer, ForeignKey("companies.id"))
     recharge = relationship("Recharge", backref="product")
 
@@ -77,7 +80,7 @@ class Recharge(Base):
     public_id = Column(String(80), nullable=False, index=True)
     created_at = Column(TIMESTAMP, default=datetime.isoformat(datetime.now()))
     phone_number = Column(String(15))
-    value = Column(DOUBLE_PRECISION)
+    value = Column(DECIMAL)
     product_id = Column(Integer, ForeignKey("products.id"))
 
     def __repr__(self):
@@ -142,7 +145,7 @@ def get_products(id=None):
         return {
             "company_id": f"{id}",
             "products": [
-                {"id": product.public_id, "value": product.value}
+                {"id": product.public_id, "value": float(product.value)}
                 for product in products
             ],
         }
@@ -154,7 +157,7 @@ def get_products(id=None):
             {
                 "company_id": f"{company.public_id}",
                 "products": [
-                    {"id": product.public_id, "value": product.value}
+                    {"id": product.public_id, "value": float(product.value)}
                     for product in products_all
                     if product.company_id == company.id
                 ],
