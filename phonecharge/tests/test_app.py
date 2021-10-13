@@ -14,7 +14,6 @@ def test_get_root_endpoint(client):
 def test_get_company_endpoint_not_found(client):
     assert client.get("/Company").status_code == 404
 
-
 def test_get_endpoint_get_company(client, company):
     client.get("/CompanyProducts")
     assert company.public_id == "claro_11"
@@ -90,6 +89,9 @@ def test_get_endpoint_get_recharge_by_id(client, recharge):
         client.get(f"/PhoneRecharges?id={public_id[0]}", headers=headers).status_code
         == 200
     )
+    
+
+   
 
 
 @pytest.mark.parametrize("recharge__phone_number", ["5511969999999"])
