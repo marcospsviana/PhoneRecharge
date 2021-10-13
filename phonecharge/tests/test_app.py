@@ -10,7 +10,6 @@ def test_get_root_endpoint(client):
 def test_get_company_endpoint_not_found(client):
     assert client.get("/Company").status_code == 404
 
-
 def test_get_endpoint_get_company(client, company):
     client.get("/CompanyProducts")
     assert company.public_id == "claro_11"
@@ -69,16 +68,22 @@ def test_get_recharge(client, recharge):
     assert recharge.created_at == "2021-10-11T21:23:16.220005"
 
 
+@pytest.mark.parametrize('recharge__public_id', ["284206977373282501394198671064916751422"])
 def test_get_endpoint_get_recharge_by_id(client, recharge):
+    recharge= Recharge(product_id='claro_20', phone_number='5511999553492', value=20.00)
     headers = {
         "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
     }
+    
     public_id = session.query(Recharge.public_id).first()
     print(f"public id in get endpoint {public_id}")
     assert (
         client.get(f"/PhoneRecharges?id={public_id[0]}", headers=headers).status_code
         == 200
     )
+    
+
+   
 
 
 @pytest.mark.parametrize("recharge__phone_number", ["5511969999999"])
