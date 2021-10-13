@@ -2,6 +2,20 @@ import json
 import pytest
 from phonecharge.models import Recharge, session
 
+
+def test_accept_credentials(client, user):
+    headers = {
+        "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
+    }
+    assert client.get("/PhoneRecharges", headers=headers).status_code == 200
+
+
+def test_user_credentials(client, user):
+    assert user.email == "marcospaulo.silvaviana@gmail.com"
+    assert user.password == "laylaebel"
+    assert user.created_at == "2021-10-12T18:23:16.220005"
+
+
 def test_get_debug_false(app):
     assert app.config["DEBUG"] is not True
 
@@ -110,7 +124,6 @@ def test_get_endpoint_get_recharge_by_phone_number(client, recharge):
     )
 
 
-
 def test_get_endpoint_get_recharge_by_id_recharge(client, recharge):
     id = session.query(Recharge.public_id).first()
     headers = {
@@ -128,6 +141,20 @@ def test_get_endpoint_get_recharge_by_id_recharge(client, recharge):
     )
 
 
+def test_get_endpoint_get_recharge_by_id_recharge_not_found(client, recharge):
+    headers = {
+        "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
+    }
+
+    assert (
+        client.get(
+            f"/PhoneRecharges?id=9999999999999",
+            headers=headers,
+        ).status_code
+        == 404
+    )
+
+
 def test_get_endpoint_get_recharge_by_phone_number_not_found(client, recharge):
     headers = {
         "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
@@ -141,13 +168,19 @@ def test_get_endpoint_get_recharge_by_phone_number_not_found(client, recharge):
     )
 
 
-def test_user_credentials(client, user):
-    assert user.email == "marcospaulo.silvaviana@gmail.com"
-    assert user.password == "laylaebel"
-    assert user.created_at == "2021-10-12T18:23:16.220005"
+def test_get_unauthorized(client, recharge):
+    assert (
+        client.get(
+            "/PhoneRecharges",
+        ).status_code
+        == 401
+    )
 
 
-def test_user_credentials_post_(client, user):
-    assert user.email == "marcospaulo.silvaviana@gmail.com"
-    assert user.password == "laylaebel"
-    assert user.created_at == "2021-10-12T18:23:16.220005"
+def test_get_products_unauthorized(client, product):
+    assert (
+        client.get(
+            "/CompanyProducts",
+        ).status_code
+        == 401
+    )
