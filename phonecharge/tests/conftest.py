@@ -9,7 +9,7 @@ import factory
 
 from sqlalchemy import orm, create_engine
 
-engine = create_engine(config("SQLALCHEMY_DATABASE_URI"))
+engine = create_engine(config("DATABASE_URL"))
 Session = orm.scoped_session(orm.sessionmaker(bind=engine))
 
 
