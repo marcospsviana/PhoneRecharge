@@ -116,7 +116,9 @@ def test_get_endpoint_get_recharge_by_id_recharge(client, recharge):
     headers = {
         "Authorization": "Basic bWFyY29zcGF1bG8uc2lsdmF2aWFuYUBnbWFpbC5jb206bGF5bGFlYmVs"
     }
-    print(f'id get recharge {id[0]}')
+
+    print(f"id get recharge {id[0]}")
+
     assert (
         client.get(
             f"/PhoneRecharges?id={id[0]}",
