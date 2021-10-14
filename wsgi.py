@@ -4,4 +4,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    app.run(host="phonerecharge.herokuapp.com")
+    app.run(host="localhost", port=5054)
