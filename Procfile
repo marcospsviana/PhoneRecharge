@@ -1,1 +1,2 @@
-web: gunicorn phonecharge:wsgi --log-file -
+web: gunicorn "phonecharge:create_app()" --log-file -
+
