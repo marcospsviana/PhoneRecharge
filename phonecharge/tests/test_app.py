@@ -148,7 +148,7 @@ def test_get_endpoint_get_recharge_by_id_recharge_not_found(client, recharge):
 
     assert (
         client.get(
-            f"/PhoneRecharges?id=9999999999999",
+            "/PhoneRecharges?id=9999999999999",
             headers=headers,
         ).status_code
         == 404

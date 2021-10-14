@@ -1,1 +1,1 @@
-web: gunicorn base:app
+web: gunicorn phonecharge:wsgi --log-file -
